@@ -31,7 +31,7 @@ function updateGame() {
 }
 
 function updateScore() {
-    document.getElementById('score').innerText = score;
+    document.getElementById('score').innerText = `Score: ${score}`;
 }
 
 function moveDragon(direction) {
@@ -52,25 +52,41 @@ function moveDragon(direction) {
     updateGame();
 }
 
-window.addEventListener('keydown', (event) => {
-    switch (event.key) {
-        case 'ArrowLeft':
-            moveDragon('left');
-            break;
-        case 'ArrowRight':
-            moveDragon('right');
-            break;
-        case 'ArrowUp':
-            moveDragon('up');
-            break;
-        case 'ArrowDown':
-            moveDragon('down');
-            break;
-    }
-});
+function startVoiceRecognition() {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event) => {
+        const command = event.results[0][0].transcript.toLowerCase();
+        switch (command) {
+            case 'move left':
+                moveDragon('left');
+                break;
+            case 'move right':
+                moveDragon('right');
+                break;
+            case 'move up':
+                moveDragon('up');
+                break;
+            case 'move down':
+                moveDragon('down');
+                break;
+        }
+        recognition.start(); // Restart recognition to keep listening
+    };
+
+    recognition.onerror = (event) => {
+        console.error('Speech recognition error detected:', event.error);
+    };
+
+    recognition.start();
+}
 
 dragonImage.onload = function() {
     backgroundImage.onload = function() {
         updateGame();
+        startVoiceRecognition(); // Start voice recognition when images are loaded
     }
 };
