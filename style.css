@@ -14,7 +14,7 @@ body {
 
 canvas {
     border: 1px solid black;
-    background-image: url('images/background.png'); /* Replace with your background image */
+    background-image: url('https://github.com/lakshay60282/lakshay12/blob/6a6b2d86aad3136972f9a8f6f93f19e516019226/background.png'); /* Replace with your background image */
     background-size: cover;
 }
 
