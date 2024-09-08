@@ -14,10 +14,10 @@ dragonImage.src = 'https://github.com/lakshay60282/lakshay12/blob/4a8361f50382e7
 backgroundImage.src = 'https://github.com/lakshay60282/lakshay12/blob/c39d4d4f97f76287ef05d18884c65bef681826ff/background.png'; // Update with your GitHub URL
 
 const dragon = {
-    x: 100,
-    y: 100,
-    width: 100,
-    height: 100,
+    x: 50,
+    y: 50,
+    width: 50,
+    height: 50,
     speed: 5
 };
 
