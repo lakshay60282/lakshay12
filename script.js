@@ -11,7 +11,7 @@ const backgroundImage = new Image();
 
 // Set image sources (replace with actual paths or URLs)
 dragonImage.src = 'https://github.com/lakshay60282/lakshay12/blob/4a8361f50382e7caaa3f76f9da8fb89ce182795d/Untitled%20design.png'; // Update with your GitHub URL
-backgroundImage.src = 'https://raw.githubusercontent.com/USERNAME/REPOSITORY/BRANCH/images/background.png'; // Update with your GitHub URL
+backgroundImage.src = 'https://github.com/lakshay60282/lakshay12/blob/c39d4d4f97f76287ef05d18884c65bef681826ff/background.png'; // Update with your GitHub URL
 
 const dragon = {
     x: 100,
