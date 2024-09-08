@@ -4,9 +4,10 @@ const ctx = canvas.getContext('2d');
 const dragonImage = new Image();
 dragonImage.src = 'https://github.com/lakshay60282/lakshay12/blob/main/Untitled%20design.png';
 const backgroundImage = new Image();
-backgroundImage.src = 'images/background.png'; // Path to your background image
+backgroundImage.src = 'https://github.com/lakshay60282/lakshay12/blob/6a6b2d86aad3136972f9a8f6f93f19e516019226/background.png
 
-const dragon = {
+co';
+    nst dragon = {
     x: 100,
     y: 100,
     width: 100,
