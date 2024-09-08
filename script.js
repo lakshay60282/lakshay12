@@ -2,7 +2,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 const dragonImage = new Image();
-dragonImage.src = 'images/flying_dragon.png'; // Path to your dragon image
+dragonImage.src = 'https://github.com/lakshay60282/lakshay12/blob/main/Untitled%20design.png';
 const backgroundImage = new Image();
 backgroundImage.src = 'images/background.png'; // Path to your background image
 
