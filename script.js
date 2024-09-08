@@ -1,11 +1,19 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+// Set canvas size
+canvas.width = 800;
+canvas.height = 600;
+
+// Load images
 const dragonImage = new Image();
-dragonImage.src = 'https://github.com/lakshay60282/lakshay12/blob/main/Untitled%20design.png';
 const backgroundImage = new Image();
-backgroundImage.src = 'https://github.com/lakshay60282/lakshay12/blob/6a6b2d86aad3136972f9a8f6f93f19e516019226/background.png';
-    nst dragon = {
+
+// Set image sources (replace with actual paths or URLs)
+dragonImage.src = 'https://raw.githubusercontent.com/USERNAME/REPOSITORY/BRANCH/images/flying_dragon.png'; // Update with your GitHub URL
+backgroundImage.src = 'https://raw.githubusercontent.com/USERNAME/REPOSITORY/BRANCH/images/background.png'; // Update with your GitHub URL
+
+const dragon = {
     x: 100,
     y: 100,
     width: 100,
@@ -16,14 +24,17 @@ backgroundImage.src = 'https://github.com/lakshay60282/lakshay12/blob/6a6b2d86aa
 let score = 0;
 
 function drawBackground() {
+    console.log('Drawing background');
     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 }
 
 function drawDragon() {
+    console.log('Drawing dragon');
     ctx.drawImage(dragonImage, dragon.x, dragon.y, dragon.width, dragon.height);
 }
 
 function updateGame() {
+    console.log('Updating game');
     drawBackground();
     drawDragon();
     updateScore();
@@ -84,8 +95,18 @@ function startVoiceRecognition() {
 }
 
 dragonImage.onload = function() {
+    console.log('Dragon image loaded');
     backgroundImage.onload = function() {
+        console.log('Background image loaded');
         updateGame();
         startVoiceRecognition(); // Start voice recognition when images are loaded
-    }
+    };
+};
+
+dragonImage.onerror = function() {
+    console.error('Failed to load dragon image');
+};
+
+backgroundImage.onerror = function() {
+    console.error('Failed to load background image');
 };
