@@ -1,35 +1,7 @@
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #87CEEB; /* Sky blue background */
+    background-color: #f0f0f0;
 }
 
-.game-container {
-    position: relative;
-    width: 800px;
-    height: 600px;
-    margin: 0 auto;
-}
-
-canvas {
+#game-canvas {
     border: 1px solid black;
-    background-image: url('https://github.com/lakshay60282/lakshay12/blob/6a6b2d86aad3136972f9a8f6f93f19e516019226/background.png'); /* Replace with your background image */
-    background-size: cover;
-}
-
-.score {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 24px;
-    color: white;
-}
-
-.credits {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: 16px;
-    color: white;
 }
