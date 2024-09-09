@@ -1,112 +1,107 @@
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
+// Get the canvas element
+var canvas = document.getElementById("game-canvas");
+var ctx = canvas.getContext("2d");
 
-// Set canvas size
-canvas.width = 800;
-canvas.height = 600;
+// Set up some constants
+var WIDTH = 640;
+var HEIGHT = 480;
+var PLAYER_SIZE = 50;
+var BLOCK_SIZE = 50;
 
-// Load images
-const dragonImage = new Image();
-const backgroundImage = new Image();
+// Set up some colors
+var WHITE = "#FFFFFF";
+var RED = "#FF0000";
+var BLUE = "#0000FF";
 
-// Set image sources (replace with actual paths or URLs)
-dragonImage.src = 'https://github.com/lakshay60282/lakshay12/blob/4a8361f50382e7caaa3f76f9da8fb89ce182795d/Untitled%20design.png'; // Update with your GitHub URL
-backgroundImage.src = 'https://github.com/lakshay60282/lakshay12/blob/c39d4d4f97f76287ef05d18884c65bef681826ff/background.png'; // Update with your GitHub URL
-
-const dragon = {
-    x: 50,
-    y: 50,
-    width: 50,
-    height: 50,
-    speed: 5
+// Set up the player
+var player = {
+    x: WIDTH / 2,
+    y: HEIGHT / 2,
+    width: PLAYER_SIZE,
+    height: PLAYER_SIZE
 };
 
-let score = 0;
-
-function drawBackground() {
-    console.log('Drawing background');
-    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-}
-
-function drawDragon() {
-    console.log('Drawing dragon');
-    ctx.drawImage(dragonImage, dragon.x, dragon.y, dragon.width, dragon.height);
-}
-
-function updateGame() {
-    console.log('Updating game');
-    drawBackground();
-    drawDragon();
-    updateScore();
-}
-
-function updateScore() {
-    document.getElementById('score').innerText = `Score: ${score}`;
-}
-
-function moveDragon(direction) {
-    switch (direction) {
-        case 'left':
-            dragon.x -= dragon.speed;
-            break;
-        case 'right':
-            dragon.x += dragon.speed;
-            break;
-        case 'up':
-            dragon.y -= dragon.speed;
-            break;
-        case 'down':
-            dragon.y += dragon.speed;
-            break;
+// Set up the blocks
+var blocks = [
+    {
+        x: 100,
+        y: 100,
+        width: BLOCK_SIZE,
+        height: BLOCK_SIZE
+    },
+    {
+        x: 300,
+        y: 300,
+        width: BLOCK_SIZE,
+        height: BLOCK_SIZE
+    },
+    {
+        x: 500,
+        y: 500,
+        width: BLOCK_SIZE,
+        height: BLOCK_SIZE
     }
-    updateGame();
-}
+];
 
-function startVoiceRecognition() {
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
+// Set up the speech recognition
+var recognition = new webkitSpeechRecognition();
+recognition.lang = "en-US";
+recognition.maxResults = 10;
 
-    recognition.onresult = (event) => {
-        const command = event.results[0][0].transcript.toLowerCase();
-        switch (command) {
-            case 'move left':
-                moveDragon('left');
-                break;
-            case 'move right':
-                moveDragon('right');
-                break;
-            case 'move up':
-                moveDragon('up');
-                break;
-            case 'move down':
-                moveDragon('down');
-                break;
+// Game loop
+function gameLoop() {
+    // Clear the canvas
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+    // Draw the player
+    ctx.fillStyle = RED;
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+
+    // Draw the blocks
+    ctx.fillStyle = BLUE;
+    for (var i = 0; i < blocks.length; i++) {
+        ctx.fillRect(blocks[i].x, blocks[i].y, blocks[i].width, blocks[i].height);
+    }
+
+    // Check for collisions with blocks
+    for (var i = 0; i < blocks.length; i++) {
+        if (checkCollision(player, blocks[i])) {
+            alert("Game over!");
+            return;
         }
-        recognition.start(); // Restart recognition to keep listening
+    }
+
+    // Update the player position based on the voice command
+    recognition.onresult = function(event) {
+        var command = event.results[0][0].transcript;
+        if (command.indexOf("up") !== -1) {
+            player.y -= 10;
+        } else if (command.indexOf("down") !== -1) {
+            player.y += 10;
+        } else if (command.indexOf("left") !== -1) {
+            player.x -= 10;
+        } else if (command.indexOf("right") !== -1) {
+            player.x += 10;
+        }
     };
 
-    recognition.onerror = (event) => {
-        console.error('Speech recognition error detected:', event.error);
-    };
-
+    // Start the speech recognition
     recognition.start();
+
+    // Request the next frame
+    requestAnimationFrame(gameLoop);
 }
 
-dragonImage.onload = function() {
-    console.log('Dragon image loaded');
-    backgroundImage.onload = function() {
-        console.log('Background image loaded');
-        updateGame();
-        startVoiceRecognition(); // Start voice recognition when images are loaded
-    };
-};
+// Check for collisions between two rectangles
+function checkCollision(rect1, rect2) {
+    if (rect1.x + rect1.width > rect2.x &&
+        rect1.x < rect2.x + rect2.width &&
+        rect1.y + rect1.height > rect2.y &&
+        rect1.y < rect2.y + rect2.height) {
+        return true;
+    }
+    return false;
+}
 
-dragonImage.onerror = function() {
-    console.error('Failed to load dragon image');
-};
-
-backgroundImage.onerror = function() {
-    console.error('Failed to load background image');
-};
+// Start the game loop
+gameLoop();
